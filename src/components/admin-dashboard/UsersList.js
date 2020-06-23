@@ -1,37 +1,67 @@
-import React from 'react'
-import Navbar from '../layout/Navbar'
+import React from 'react';
+import { userActions } from '../../actions/user.action';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const UsersList = () => {
-  return (
-    
-    <div >
-    <Navbar/>
-      <div className="card">
-        <div className="card-content grey-text">
-          <span className="card-title ">Project title</span>
-          <p>Posted by The Net Ninja</p>
-          <p className="grey-text">3rd September, 2am</p>
-        </div>
-      </div>
 
-      <div className="card ">
-        <div className="card-content grey-text text-darken-3">
-          <span className="card-title ">Project title</span>
-          <p>Posted by The Net Ninja</p>
-          <p className="grey-text">3rd September, 2am</p>
-        </div>
-      </div>
+class UsersList extends React.Component {
+  componentDidMount() {
+    this.props.getUsers();
+  }
+  handleDeleteUser(id) {
+    return (e) => this.props.deleteUser(id);
+  }
+  render() {
+    const { user, users } = this.props;
+    return (
 
-      <div className="card z-depth-0 project-summary">
-        <div className="card-content grey-text text-darken-3">
-          <span className="card-title ">Project title</span>
-          <p>Posted by The Net Ninja</p>
-          <p className="grey-text">3rd September, 2am</p>
-        </div>
-      </div>
+      <div>
+        <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+          <ul className="navbar-nav">
       
-    </div>
-  )
+            <li className="nav-item">
+              <span className="nav-link" ><Link to="/newuser">New User</Link></span>
+
+            </li>
+            <li className="nav-item">
+              <span className="nav-link" href="#"><Link to="/">Logout</Link></span>
+            </li>
+          
+          </ul>
+        </nav>
+
+
+        {users.loading && <em>Loading users...</em>}
+        {users.error && <span className="text-danger">ERROR: {users.error}</span>}
+        {users.items &&
+          <ul>
+            {users.items.map((user, index) =>
+              <li key={user.id}>
+                {user.email + ' ' + user.password}
+                {
+                  user.deleting ? <em> - Deleting...</em>
+                  : user.deleteError ? <span className="text-danger"> - ERROR: {user.deleteError}</span>
+                  : <span> - <a onClick={this.handleDeleteUser(user.id)}>Delete</a></span>
+              }
+              </li>
+            )}
+          </ul>
+        }
+
+      </div>
+    )
+  }
+}
+function mapState(state) {
+  const { users, authentication } = state;
+  const { user } = authentication;
+  return { user, users };
 }
 
-export default UsersList
+const actionCreators = {
+  getUsers: userActions.getAll,
+  deleteUser: userActions.delete
+}
+
+const connectedHomePage = connect(mapState, actionCreators)(UsersList);
+export { connectedHomePage as UsersList };

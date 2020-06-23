@@ -55,7 +55,7 @@ fs.readFile("./db.json", (err, data) => {
     var data = JSON.parse(data.toString());
 
     // Get the id of last user
-    var last_item_id = data.users[data.users.length-1].id || 0;
+    var last_item_id = (data.users[data.users.length-1].id) || 0;
 
     //Add new user
     data.users.push({id: last_item_id + 1, email: email, password: password}); //add some data

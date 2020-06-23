@@ -1,125 +1,109 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { userActions } from '../../actions/user.action';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-class CreateUser extends Component {
+class NewUser extends React.Component { 
+    constructor(props) {
+    super(props);
 
+    this.state = {
+    
+        email: '',
+        password: '',
+        submitted: false
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+}
+
+handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+   
+}
+
+handleSubmit(e) {
+    e.preventDefault();
+
+    this.setState({ submitted: true });
+    const { email, password } = this.state;
+    if ( email && password) {
+        this.props.register(email, password);
+    }
+}
   render() {
+    const { registering } = this.props;
+    const { email, password, submitted } = this.state;
     return (
-        <div></div>
-        /*<div class="container py-2">
-        <div class="row my-2">
-           
-            <div class="col-lg-4">
-                <h2 class="text-center font-weight-light">User Profile</h2>
-            </div>
-            <div class="col-lg-8">
-                <div class="alert alert-info alert-dismissable"> <a class="panel-close close" data-dismiss="alert">×</a> This is an <strong>.alert</strong>. Use this to show important messages to the user. </div>
-            </div>
-            <div class="col-lg-8 order-lg-1 personal-info">
-                <form role="form">
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="text" value="Jane" />
+        <div className="container">
+        <div className="row">
+            <div className="col-md-12 min-vh-100 d-flex flex-column justify-content-center">
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 mx-auto">
+
+
+                        <div className="card rounded shadow shadow-sm">
+                            <div className="card-header">
+                                <h3 className="mb-0">Register</h3>
+                            </div>
+                            <div className="card-body">
+                           
+                            <form name="form" onSubmit={this.handleSubmit}>
+                               
+                                <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                                    <label htmlFor="email">Last Name</label>
+                                    <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
+                                    {submitted && !email &&
+                                        <div className="help-block">Last Name is required</div>
+                                    }
+                                </div>
+                                
+                                <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+                                    <label htmlFor="password">Password</label>
+                                    <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
+                                    {submitted && !password &&
+                                        <div className="help-block">Password is required</div>
+                                    }
+                                </div>
+                                <div className="form-group">
+                                    <button className="btn btn-primary">Register</button>
+                                    {registering && 
+                                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                    }
+                                    
+                                </div>
+                            </form>
+                            </div>
                         </div>
+
+
                     </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="text" value="Bishop" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="email" value="email@gmail.com" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="text" value="" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="url" value="" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Address</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="text" value="" placeholder="Street" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label"></label>
-                        <div class="col-lg-6">
-                            <input class="form-control" type="text" value="" placeholder="City" />
-                        </div>
-                        <div class="col-lg-3">
-                            <input class="form-control" type="text" value="" placeholder="State" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                        <div class="col-lg-9">
-                            <select id="user_time_zone" class="form-control" size="0">
-                                <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                <option value="Alaska">(GMT-09:00) Alaska</option>
-                                <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                <option value="Arizona">(GMT-07:00) Arizona</option>
-                                <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="text" value="janeuser" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="password" value="11111122333" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                        <div class="col-lg-9">
-                            <input class="form-control" type="password" value="11111122333" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-9 ml-auto text-right">
-                            <input type="reset" class="btn btn-outline-secondary" value="Cancel" />
-                            <input type="button" class="btn btn-primary" value="Save Changes" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-4 order-lg-0 text-center">
-                <img src="//api.adorable.io/avatars/120/trickst3r.png" class="mx-auto img-fluid rounded-circle" alt="avatar" />
-                <h6 class="my-4">Upload a new photo</h6>
-                <div class="input-group px-xl-4">
-                    <div className="custom-file">
-                        <input type="file" className="custom-file-input" id="inputGroupFile02"/>
-                        <label className="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
-                    </div>
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary"><i class="fa fa-upload"></i></button>
-                    </div>
+
+
                 </div>
+
+
             </div>
+
         </div>
-    </div>*/
+
+    </div>
+       
+      
     
     )
   }
 }
+function mapState(state) {
+    const { registering } = state.registration;
+    return { registering };
+}
 
-export default CreateUser
+const actionCreators = {
+    register: userActions.register
+}
+
+const connectedRegisterPage = connect(mapState, actionCreators)(NewUser);
+export { connectedRegisterPage as NewUser };
