@@ -1,6 +1,7 @@
 const fs = require('fs')
 const bodyParser = require('body-parser')
 const jsonServer = require('json-server')
+const auth = require('json-server-auth')
 const jwt = require('jsonwebtoken')
 
 const server = jsonServer.create()
@@ -92,6 +93,10 @@ server.post('/auth/login', (req, res) => {
   res.status(200).json({access_token})
 })
 
+
+ 
+
+
 server.use(/^(?!\/auth).*$/,  (req, res, next) => {
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     const status = 401
@@ -117,6 +122,7 @@ server.use(/^(?!\/auth).*$/,  (req, res, next) => {
   }
 })
 
+server.use(auth)
 server.use(router)
 
 server.listen(3000, () => {

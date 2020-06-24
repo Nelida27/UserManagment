@@ -1,1 +1,2 @@
-{"users":[{"id":2,"email":"post@gmail.com","password":"ada"},{"id":3,"email":"nelida@gmail.com","password":"ada"},{"id":4,"email":"nelida@gmail.com","password":"ada"}]}
+{"users":[{"id":2,"email":"post@gmail.com","password":"ada","image":"https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"},{"id":3,"email":"nelida@gmail.com","password":"ada","image":"https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"}
+    ]}

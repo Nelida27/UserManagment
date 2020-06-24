@@ -14,8 +14,8 @@ class UsersList extends React.Component {
   render() {
     const { user, users } = this.props;
     return (
-
-      <div>
+<div>
+   
         <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
           <ul className="navbar-nav">
       
@@ -30,22 +30,42 @@ class UsersList extends React.Component {
           </ul>
         </nav>
 
-
+        <p>{user}</p>
         {users.loading && <em>Loading users...</em>}
         {users.error && <span className="text-danger">ERROR: {users.error}</span>}
         {users.items &&
-          <ul>
+
+          
+          <div className="col-md-8">
             {users.items.map((user, index) =>
-              <li key={user.id}>
-                {user.email + ' ' + user.password}
+              <div className="card mb-3 mt-3"  key={user.id} >
+              <div class="row no-gutters">
+              <div class="col-md-4">
+               <img src={user.image} style={{width:200}} class="card-img" alt="..."/>
+               </div>
+
+               <div className="col-md-8">
+               <div class="card-body">
+               <h5 class="card-title">{user.email}</h5>
+               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+               <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                
+               
+                {
+                  <button class="btn btn-primary mr-2" >Edit</button>
+                }
                 {
                   user.deleting ? <em> - Deleting...</em>
+                  
                   : user.deleteError ? <span className="text-danger"> - ERROR: {user.deleteError}</span>
-                  : <span> - <a onClick={this.handleDeleteUser(user.id)}>Delete</a></span>
+                  :  <button class="btn btn-danger" onClick={this.handleDeleteUser(user.id)}>Delete</button>
               }
-              </li>
+              </div>
+              </div>
+              </div>
+              </div>
             )}
-          </ul>
+          </div>
         }
 
       </div>
