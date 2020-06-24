@@ -1,2 +1,27 @@
-{"users":[{"id":2,"email":"post@gmail.com","password":"ada","image":"https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"},{"id":3,"email":"nelida@gmail.com","password":"ada","image":"https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"}
+{"users":[
+    {"id":2,
+        "email":"ana@gmail.com",
+        "password":"ana",
+        "image":"https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg",
+         "birthday":"24/10/1995",
+         "username":"bruno27",
+         "phone":"069322245",
+         "userLevel":"admin",
+         "address":"Tirane",
+         "linkedin":""},
+
+    {
+        "id":3,
+        "email":"bruno@gmail.com",
+        "password":"bruno",
+        "image":"https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg",
+         "birthday":"27/10/1995",
+         "username":"bruno27",
+         "phone":"069345545",
+         "userLevel":"admin",
+         "address":"Tirane",
+         "linkedin":""
+
+
+        }
     ]}

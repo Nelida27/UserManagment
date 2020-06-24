@@ -58,7 +58,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`http://localhost:4000/auth/register`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:3000/users`, requestOptions).then(handleResponse);
 }
 function update(user) {
     const requestOptions = {
